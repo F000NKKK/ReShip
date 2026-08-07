@@ -83,7 +83,7 @@ cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace --all-features
 cargo doc --workspace --all-features --no-deps
 
-cargo fmt --manifest-path protocol/Cargo.toml --check
+cargo fmt --manifest-path protocol/Cargo.toml --all -- --check
 cargo clippy --manifest-path protocol/Cargo.toml --workspace --all-targets --all-features -- -D warnings
 cargo test --manifest-path protocol/Cargo.toml --workspace --all-features
 cargo doc --manifest-path protocol/Cargo.toml --workspace --all-features --no-deps
