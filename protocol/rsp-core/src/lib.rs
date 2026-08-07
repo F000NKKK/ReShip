@@ -26,7 +26,10 @@ string_id!(ApplicationId, "Stable application identifier.");
 string_id!(ChannelName, "Release channel name such as test or stable.");
 string_id!(ReleaseId, "Opaque immutable release identifier.");
 string_id!(ReleaseVersion, "Human-facing application version string.");
-string_id!(TargetTriple, "Opaque target/platform selector owned by the publisher.");
+string_id!(
+    TargetTriple,
+    "Opaque target/platform selector owned by the publisher."
+);
 
 /// Monotonic release order within one application/channel/target stream.
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
