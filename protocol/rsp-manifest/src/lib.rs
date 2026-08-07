@@ -1,7 +1,10 @@
 #![forbid(unsafe_code)]
 //! Immutable installation-snapshot model for RSP.
 
-use rsp_core::{ApplicationId, ContentDigest, ProtocolVersion, ReleaseId, ReleaseSequence, ReleaseVersion, TargetTriple};
+use rsp_core::{
+    ApplicationId, ContentDigest, ProtocolVersion, ReleaseId, ReleaseSequence, ReleaseVersion,
+    TargetTriple,
+};
 use serde::{Deserialize, Serialize};
 
 /// Complete file snapshot for one immutable release.
