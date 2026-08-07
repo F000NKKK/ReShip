@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTDOCFLAGS: -Dwarnings
+
+jobs:
+  boundaries:
+    name: architecture boundaries
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: RSP must not depend on ReShip implementation crates
+        shell: bash
+        run: |
+          if grep -R -nE '(^|[[:space:]])reship-[a-z0-9_-]+[[:space:]]*=' protocol/*/Cargo.toml; then
+            echo 'RSP -> ReShip dependency is forbidden.' >&2
+            exit 1
+          fi
+
+  rust:
+    name: rust (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install Rust MSRV
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: "1.93"
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2.9.1
+        with:
+          workspaces: |
+            . -> target
+            protocol -> target
+      - name: Format ReShip workspace
+        run: cargo fmt --check
+      - name: Clippy ReShip workspace
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+      - name: Test ReShip workspace
+        run: cargo test --workspace --all-features
+      - name: Document ReShip workspace
+        run: cargo doc --workspace --all-features --no-deps
+      - name: Format RSP workspace
+        run: cargo fmt --manifest-path protocol/Cargo.toml --all -- --check
+      - name: Clippy RSP workspace
+        run: cargo clippy --manifest-path protocol/Cargo.toml --workspace --all-targets --all-features -- -D warnings
+      - name: Test RSP workspace
+        run: cargo test --manifest-path protocol/Cargo.toml --workspace --all-features
+      - name: Document RSP workspace
+        run: cargo doc --manifest-path protocol/Cargo.toml --workspace --all-features --no-deps

@@ -28,8 +28,8 @@ Mozilla Public License Version 2.0
         in Exhibit B to the Covered Software; or
 
     (b) that the Covered Software was made available under the terms of
-        version 1.1 or earlier of the License, but not also under the
-        terms of a Secondary License.
+        version 1.1 or earlier, but not also under the terms of a
+        Secondary License.
 
 1.6. "Executable Form"
     means any form of the work other than Source Code Form.
@@ -191,7 +191,7 @@ Software with a work governed by one or more Secondary Licenses, and the
 Covered Software is not Incompatible With Secondary Licenses, this
 License permits You to additionally distribute such Covered Software
 under the terms of such Secondary License(s), so that the recipient of
-the Larger Work may, at their option, further distribute the Covered
+the Larger Work may, at their option, further distribute such Covered
 Software under the terms of either this License or such Secondary
 License(s).
 
@@ -209,7 +209,7 @@ You may choose to offer, and to charge a fee for, warranty, support,
 indemnity or liability obligations to one or more recipients of Covered
 Software. However, You may do so only on Your own behalf, and not on
 behalf of any Contributor. You must make it absolutely clear that any
-such warranty, support, indemnity, or liability obligation is offered by
+such warranty, support, indemnity or liability obligation is offered by
 You alone, and You hereby agree to indemnify every Contributor for any
 liability incurred by such Contributor as a result of warranty, support,
 indemnity or liability terms You offer. You may include additional
@@ -219,15 +219,15 @@ jurisdiction.
 4. Inability to Comply Due to Statute or Regulation
 ---------------------------------------------------
 
-If it is impossible for You to comply with any of the terms of this
-License with respect to some or all of the Covered Software due to
-statute, judicial order, or regulation then You must: (a) comply with
-the terms of this License to the maximum extent possible; and (b)
-describe the limitations and the code they affect. Such description must
-be placed in a text file included with all distributions of the Covered
-Software under this License. Except to the extent prohibited by statute
-or regulation, such description must be sufficiently detailed for a
-recipient of ordinary skill to be able to understand it.
+If it is impossible for You to comply with the terms of this License with
+respect to some or all of the Covered Software due to statute, judicial
+order, or regulation then You must: (a) comply with the terms of this
+License to the maximum extent possible; and (b) describe the limitations
+and the code they affect. Such description must be placed in a text file
+included with all distributions of the Covered Software under this
+License. Except to the extent prohibited by statute or regulation, such
+description must be sufficiently detailed for a recipient of ordinary
+skill to be able to understand it.
 
 5. Termination
 --------------
@@ -244,7 +244,7 @@ Contributor are reinstated on an ongoing basis if such Contributor
 notifies You of the non-compliance by some reasonable means, this is the
 first time You have received notice of non-compliance with this License
 from such Contributor, and You become compliant prior to 30 days after
-Your receipt of the notice.
+your receipt of the notice.
 
 5.2. If You initiate litigation against any entity by asserting a patent
 infringement claim (excluding declaratory judgment actions,
@@ -272,7 +272,7 @@ prior to termination shall survive termination.
 *  Should any Covered Software prove defective in any respect, You     *
 *  (not any Contributor) assume the cost of any necessary servicing,   *
 *  repair, or correction. This disclaimer of warranty constitutes an   *
-*  essential part of this License. No use of any Covered Software is   *
+*  essential part of this License. No use of Covered Software is       *
 *  authorized under this License except under this disclaimer.         *
 *                                                                      *
 ************************************************************************
@@ -332,18 +332,17 @@ distinguishing version number.
 
 10.2. Effect of New Versions
 
-You may distribute the Covered Software under the terms of the version
-of the License under which You originally received the Covered Software,
-or under the terms of any subsequent version published by the license
-steward.
+You may distribute Covered Software under the terms of the version of the
+License under which You originally received Covered Software, or under
+the terms of any subsequent version published by the license steward.
 
 10.3. Modified Versions
 
 If you create software not governed by this License, and you want to
-create a new license for such software, you may create and use a
-modified version of this License if you rename the license and remove
-any references to the name of the license steward (except to note that
-such modified license differs from this License).
+create a new license for such software, you may create and use a modified
+version of this License if you rename the license and remove any
+references to the name of the license steward (except to note that such
+modified license differs from this License).
 
 10.4. Distributing Source Code Form that is Incompatible With Secondary
 Licenses
