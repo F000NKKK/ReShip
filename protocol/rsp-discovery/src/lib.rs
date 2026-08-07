@@ -1,7 +1,10 @@
 #![forbid(unsafe_code)]
 //! Transport-independent channel discovery for RSP.
 
-use rsp_core::{ApplicationId, ChannelName, ContentDigest, ProtocolVersion, ReleaseId, ReleaseSequence, ReleaseVersion, TargetTriple};
+use rsp_core::{
+    ApplicationId, ChannelName, ContentDigest, ProtocolVersion, ReleaseId, ReleaseSequence,
+    ReleaseVersion, TargetTriple,
+};
 use serde::{Deserialize, Serialize};
 
 /// Current desired release for one application/channel/target stream.
