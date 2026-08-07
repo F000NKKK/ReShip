@@ -54,7 +54,7 @@ jobs:
       - name: Document ReShip workspace
         run: cargo doc --workspace --all-features --no-deps
       - name: Format RSP workspace
-        run: cargo fmt --manifest-path protocol/Cargo.toml --check
+        run: cargo fmt --manifest-path protocol/Cargo.toml --all -- --check
       - name: Clippy RSP workspace
         run: cargo clippy --manifest-path protocol/Cargo.toml --workspace --all-targets --all-features -- -D warnings
       - name: Test RSP workspace
