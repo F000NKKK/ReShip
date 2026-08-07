@@ -22,8 +22,14 @@ enum Command {
 fn main() {
     let cli = Cli::parse();
     match cli.command {
-        Command::Publish => println!("publish is defined by the v0.1 architecture and implemented in a follow-up RS task"),
-        Command::Promote => println!("promote is defined by the v0.1 architecture and implemented in a follow-up RS task"),
-        Command::Inspect => println!("inspect is defined by the v0.1 architecture and implemented in a follow-up RS task"),
+        Command::Publish => println!(
+            "publish is defined by the v0.1 architecture and implemented in a follow-up RS task"
+        ),
+        Command::Promote => println!(
+            "promote is defined by the v0.1 architecture and implemented in a follow-up RS task"
+        ),
+        Command::Inspect => println!(
+            "inspect is defined by the v0.1 architecture and implemented in a follow-up RS task"
+        ),
     }
 }
