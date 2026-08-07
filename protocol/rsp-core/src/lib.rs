@@ -34,7 +34,7 @@ string_id!(TargetTriple, "Opaque target/platform selector owned by the publisher
 pub struct ReleaseSequence(pub u64);
 
 /// Hash algorithm used by a content-addressed resource.
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum DigestAlgorithm {
     Sha256,
