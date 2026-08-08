@@ -1,6 +1,6 @@
 use rsp_core::{
-    ApplicationId, ChannelName, ChannelRevision, ContentDigest, ContentLength, ReleaseId,
-    ReleaseVersion, TargetId, RSP_V1,
+    ApplicationId, ChannelName, ChannelRevision, ContentDigest, ContentLength, RSP_V1, ReleaseId,
+    ReleaseVersion, TargetId,
 };
 use rsp_discovery::ChannelState;
 use rsp_json::to_string;
