@@ -8,8 +8,10 @@
 //! their semantic types before reaching this encoder.
 
 use core::{cmp::Ordering, fmt};
+use rsp_core::ContentDigest;
 use serde::Serialize;
 use serde_json::Value;
+use sha2::{Digest, Sha256};
 
 const MAX_SAFE_JSON_INTEGER: u64 = 9_007_199_254_740_991;
 
@@ -62,6 +64,21 @@ where
     T: Serialize,
 {
     Ok(String::from_utf8(to_vec(value)?).expect("canonical JSON writer only emits UTF-8"))
+}
+
+/// Computes the authoritative SHA-256 digest of an RSP resource's canonical JSON bytes.
+///
+/// Callers should use this function when assigning content-addressed identities to
+/// release descriptors, manifests, and other canonical JSON resources instead of
+/// hashing an arbitrary serializer representation.
+pub fn canonical_sha256<T>(value: &T) -> Result<ContentDigest, CanonicalJsonError>
+where
+    T: Serialize,
+{
+    let bytes = to_vec(value)?;
+    let hash = Sha256::digest(bytes);
+    ContentDigest::sha256(format!("{hash:x}"))
+        .map_err(|_| unreachable!("SHA-256 always produces 64 lowercase hexadecimal digits"))
 }
 
 fn write_value(value: &Value, output: &mut Vec<u8>) -> Result<(), CanonicalJsonError> {
@@ -163,6 +180,26 @@ mod tests {
             })
             .unwrap(),
             "{\"a\":\"first\",\"z\":\"last\"}"
+        );
+    }
+
+    #[test]
+    fn canonical_digest_hashes_canonical_bytes() {
+        #[derive(Serialize)]
+        struct Fixture<'a> {
+            z: &'a str,
+            a: &'a str,
+        }
+
+        let digest = canonical_sha256(&Fixture {
+            z: "last",
+            a: "first",
+        })
+        .unwrap();
+
+        assert_eq!(
+            digest.to_string(),
+            "sha256:af3bf072ea841a14c20d546622a7edd6ecb1b6a59c12f49cef627eac17416041"
         );
     }
 }
