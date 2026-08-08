@@ -133,7 +133,7 @@ mod tests {
             "a": 3
         });
 
-        assert_eq!(to_string(&value).unwrap(), "{\"a\":3,\"😀\":1,\"€\":2}");
+        assert_eq!(to_string(&value).unwrap(), "{\"a\":3,\"€\":2,\"😀\":1}");
     }
 
     #[test]
