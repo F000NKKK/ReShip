@@ -83,7 +83,7 @@ decimal_u64_wire!(ChannelRevision);
 decimal_u64_wire!(ContentLength);
 
 /// Hash algorithm used by a content-addressed resource.
-#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum DigestAlgorithm {
     Sha256,
 }
