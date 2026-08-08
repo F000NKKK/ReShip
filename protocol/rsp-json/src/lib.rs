@@ -61,18 +61,14 @@ pub fn to_string<T>(value: &T) -> Result<String, CanonicalJsonError>
 where
     T: Serialize,
 {
-    String::from_utf8(to_vec(value)?).map_err(|error| {
-        CanonicalJsonError::Serialize(serde_json::Error::io(std::io::Error::new(
-            std::io::ErrorKind::InvalidData,
-            error,
-        )))
-    })
+    Ok(String::from_utf8(to_vec(value)?).expect("canonical JSON writer only emits UTF-8"))
 }
 
 fn write_value(value: &Value, output: &mut Vec<u8>) -> Result<(), CanonicalJsonError> {
     match value {
         Value::Null => output.extend_from_slice(b"null"),
-        Value::Bool(value) => output.extend_from_slice(if *value { b"true" } else { b"false" }),
+        Value::Bool(true) => output.extend_from_slice(b"true"),
+        Value::Bool(false) => output.extend_from_slice(b"false"),
         Value::Number(number) => {
             if let Some(value) = number.as_u64() {
                 if value > MAX_SAFE_JSON_INTEGER {
