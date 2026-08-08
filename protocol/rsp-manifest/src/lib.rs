@@ -3,7 +3,7 @@
 
 use core::fmt;
 use rsp_core::{ContentDigest, ContentLength, ProtocolVersion, TargetId};
-use serde::{de, Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer, de};
 use std::collections::BTreeMap;
 
 /// Complete immutable filesystem snapshot for one release target.
