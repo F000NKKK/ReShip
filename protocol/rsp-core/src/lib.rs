@@ -2,7 +2,7 @@
 //! Transport-independent primitives for the ReShip Protocol (RSP).
 
 use core::{fmt, str::FromStr};
-use serde::{de, Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer, de};
 
 /// RSP semantic protocol version.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize, Deserialize)]
@@ -67,13 +67,12 @@ macro_rules! decimal_u64_wire {
                     || (value.len() > 1 && value.starts_with('0'))
                     || !value.bytes().all(|byte| byte.is_ascii_digit())
                 {
-                    return Err(de::Error::custom("expected canonical unsigned decimal string"));
+                    return Err(de::Error::custom(
+                        "expected canonical unsigned decimal string",
+                    ));
                 }
 
-                value
-                    .parse::<u64>()
-                    .map(Self)
-                    .map_err(de::Error::custom)
+                value.parse::<u64>().map(Self).map_err(de::Error::custom)
             }
         }
     };
