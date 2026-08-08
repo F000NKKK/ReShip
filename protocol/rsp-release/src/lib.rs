@@ -1,7 +1,9 @@
 #![forbid(unsafe_code)]
 //! Immutable logical release metadata for RSP.
 
-use rsp_core::{ApplicationId, ContentDigest, ProtocolVersion, ReleaseId, ReleaseVersion, TargetId};
+use rsp_core::{
+    ApplicationId, ContentDigest, ProtocolVersion, ReleaseId, ReleaseVersion, TargetId,
+};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
