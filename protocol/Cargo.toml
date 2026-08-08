@@ -1,6 +1,13 @@
 [workspace]
 resolver = "3"
-members = ["rsp-core", "rsp-manifest", "rsp-discovery", "rsp-http"]
+members = [
+    "rsp-core",
+    "rsp-manifest",
+    "rsp-release",
+    "rsp-discovery",
+    "rsp-json",
+    "rsp-http",
+]
 
 [workspace.package]
 edition = "2024"
@@ -13,6 +20,9 @@ authors = ["RSP Contributors", "F000NK"]
 [workspace.dependencies]
 rsp-core = { path = "rsp-core", version = "0.1.0" }
 rsp-manifest = { path = "rsp-manifest", version = "0.1.0" }
+rsp-release = { path = "rsp-release", version = "0.1.0" }
 rsp-discovery = { path = "rsp-discovery", version = "0.1.0" }
+rsp-json = { path = "rsp-json", version = "0.1.0" }
 rsp-http = { path = "rsp-http", version = "0.1.0" }
 serde = { version = "1", features = ["derive"] }
+serde_json = "1"
