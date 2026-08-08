@@ -24,10 +24,13 @@ pub struct ManifestFile {
     pub executable: bool,
 }
 
-/// Canonical relative path inside a managed installation snapshot.
+/// Canonical portable relative path inside a managed installation snapshot.
 ///
-/// RSP paths always use forward slashes, cannot be absolute, and cannot contain
-/// empty, current-directory, or parent-directory segments.
+/// RSP uses one conservative path grammar for every target so a manifest cannot
+/// acquire platform-specific absolute-path, alternate-stream, or reserved-name
+/// semantics when materialized. Native materializers must additionally reject
+/// distinct manifest paths that collide under the destination filesystem's own
+/// case-folding or Unicode-normalization rules.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct ManifestPath(String);
 
@@ -60,14 +63,35 @@ fn validate_path(value: &str) -> Result<(), InvalidManifestPath> {
         || value.ends_with('/')
         || value.contains('\\')
         || value.contains('\0')
-        || value
-            .split('/')
-            .any(|segment| segment.is_empty() || segment == "." || segment == "..")
+        || value.split('/').any(invalid_segment)
     {
         Err(InvalidManifestPath)
     } else {
         Ok(())
     }
+}
+
+fn invalid_segment(segment: &str) -> bool {
+    if segment.is_empty()
+        || segment == "."
+        || segment == ".."
+        || segment.ends_with([' ', '.'])
+        || segment
+            .chars()
+            .any(|character| character.is_control() || matches!(character, '<' | '>' | ':' | '"' | '|' | '?' | '*'))
+    {
+        return true;
+    }
+
+    let stem = segment.split('.').next().unwrap_or(segment);
+    is_windows_reserved_name(stem)
+}
+
+fn is_windows_reserved_name(stem: &str) -> bool {
+    let name = stem.to_ascii_uppercase();
+    matches!(name.as_str(), "CON" | "PRN" | "AUX" | "NUL")
+        || matches!(name.as_str(), "COM1" | "COM2" | "COM3" | "COM4" | "COM5" | "COM6" | "COM7" | "COM8" | "COM9")
+        || matches!(name.as_str(), "LPT1" | "LPT2" | "LPT3" | "LPT4" | "LPT5" | "LPT6" | "LPT7" | "LPT8" | "LPT9")
 }
 
 impl fmt::Display for ManifestPath {
@@ -100,14 +124,35 @@ mod tests {
 
     #[test]
     fn manifest_path_rejects_non_canonical_paths() {
-        for value in ["", "/app.exe", "a/", "a//b", "a/./b", "a/../b", "a\\b"] {
+        for value in [
+            "",
+            "/app.exe",
+            "a/",
+            "a//b",
+            "a/./b",
+            "a/../b",
+            "a\\b",
+            "C:/app.exe",
+            "bin/file:stream",
+            "bin/file?.dll",
+            "bin/file*",
+            "bin/trailing. ",
+            "bin/trailing.",
+            "bin/CON",
+            "bin/con.txt",
+            "bin/COM1.dll",
+            "bin/LPT9",
+            "bin/control\u{1f}.txt",
+        ] {
             assert!(ManifestPath::new(value).is_err(), "accepted {value:?}");
         }
     }
 
     #[test]
     fn manifest_path_accepts_portable_relative_paths() {
-        let path = ManifestPath::new("bin/sub/app.exe").unwrap();
-        assert_eq!(path.as_str(), "bin/sub/app.exe");
+        for value in ["bin/sub/app.exe", "assets/data-1.json", "dir.name/file_name"] {
+            let path = ManifestPath::new(value).unwrap();
+            assert_eq!(path.as_str(), value);
+        }
     }
 }
