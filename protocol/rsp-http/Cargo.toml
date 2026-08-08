@@ -8,6 +8,4 @@ repository.workspace = true
 publish = false
 
 [dependencies]
-rsp-core.workspace = true
-rsp-discovery.workspace = true
 serde.workspace = true
