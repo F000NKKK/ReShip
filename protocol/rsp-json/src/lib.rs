@@ -157,7 +157,11 @@ mod tests {
         }
 
         assert_eq!(
-            to_string(&Fixture { z: "last", a: "first" }).unwrap(),
+            to_string(&Fixture {
+                z: "last",
+                a: "first",
+            })
+            .unwrap(),
             "{\"a\":\"first\",\"z\":\"last\"}"
         );
     }
