@@ -76,9 +76,9 @@ fn invalid_segment(segment: &str) -> bool {
         || segment == "."
         || segment == ".."
         || segment.ends_with([' ', '.'])
-        || segment
-            .chars()
-            .any(|character| character.is_control() || matches!(character, '<' | '>' | ':' | '"' | '|' | '?' | '*'))
+        || segment.chars().any(|character| {
+            character.is_control() || matches!(character, '<' | '>' | ':' | '"' | '|' | '?' | '*')
+        })
     {
         return true;
     }
@@ -90,8 +90,14 @@ fn invalid_segment(segment: &str) -> bool {
 fn is_windows_reserved_name(stem: &str) -> bool {
     let name = stem.to_ascii_uppercase();
     matches!(name.as_str(), "CON" | "PRN" | "AUX" | "NUL")
-        || matches!(name.as_str(), "COM1" | "COM2" | "COM3" | "COM4" | "COM5" | "COM6" | "COM7" | "COM8" | "COM9")
-        || matches!(name.as_str(), "LPT1" | "LPT2" | "LPT3" | "LPT4" | "LPT5" | "LPT6" | "LPT7" | "LPT8" | "LPT9")
+        || matches!(
+            name.as_str(),
+            "COM1" | "COM2" | "COM3" | "COM4" | "COM5" | "COM6" | "COM7" | "COM8" | "COM9"
+        )
+        || matches!(
+            name.as_str(),
+            "LPT1" | "LPT2" | "LPT3" | "LPT4" | "LPT5" | "LPT6" | "LPT7" | "LPT8" | "LPT9"
+        )
 }
 
 impl fmt::Display for ManifestPath {
@@ -150,7 +156,11 @@ mod tests {
 
     #[test]
     fn manifest_path_accepts_portable_relative_paths() {
-        for value in ["bin/sub/app.exe", "assets/data-1.json", "dir.name/file_name"] {
+        for value in [
+            "bin/sub/app.exe",
+            "assets/data-1.json",
+            "dir.name/file_name",
+        ] {
             let path = ManifestPath::new(value).unwrap();
             assert_eq!(path.as_str(), value);
         }
