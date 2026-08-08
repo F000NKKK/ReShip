@@ -10,3 +10,9 @@ publish = false
 [dependencies]
 serde.workspace = true
 serde_json.workspace = true
+
+[dev-dependencies]
+rsp-core.workspace = true
+rsp-discovery.workspace = true
+rsp-manifest.workspace = true
+rsp-release.workspace = true
